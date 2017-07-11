@@ -1,0 +1,15 @@
+model {
+	for(i in 1:n) {
+		y[i] ~ dbern(prob[i])
+		p[i] <- exp(-exp(m[i]))
+      	m[i] <- beta0 + inprod(X[i,],beta[])
+		prob[i]<- 1-pow(p[i],lambda)
+	}
+	
+	beta0 ~ dnorm(0.0,0.01)
+	for (j in 1:k) {
+    beta[j] ~ dnorm(0.0,0.01)
+  	}
+    loglambda ~ dunif(-2,2)
+    lambda <- exp(loglambda)
+}
